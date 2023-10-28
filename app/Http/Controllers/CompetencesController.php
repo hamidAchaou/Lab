@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 
 class CompetencesController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $competences = Competence::all();
+        $competences = Competence::latest()->paginate(4);
         return view('competences.index', ['competences' => $competences]);
     }
 
@@ -46,7 +47,6 @@ class CompetencesController extends Controller
         $competences->save();
 
         return redirect()->route('competences.index')->with('success', 'competences added successfully');
-
 
     }
 
@@ -94,9 +94,26 @@ class CompetencesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        Competence::where('id', $id)->delete();
+        $competence = Competence::findOrFail($request->input('id'));
+        $competence->delete();
+        // Competence::where()->delete();
         return redirect()->route('competences.index')->with('danger', 'your competences Deleted');
     }
+
+    public function searchCompetences(Request $request)
+    {
+        $searchQuery = $request->input('search');
+    
+        $results = Competence::where('Name', 'like', '%' . $searchQuery . '%')
+            ->orWhere('Code', 'like', '%' . $searchQuery . '%')
+            ->paginate(4, ['*'], 'page', 1);
+    
+        return response()->json([
+            'data' => $results->items(),
+            'links' => $results->links('pagination::bootstrap-5')->toHtml(),
+        ]);
+    }
+    
 }

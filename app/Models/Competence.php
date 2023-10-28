@@ -11,7 +11,7 @@ class Competence extends Model
     protected $fillable = [
         'Name',
         'Code',
-        'Référence',
+        'Reference ',
         'Description'
     ];
 }

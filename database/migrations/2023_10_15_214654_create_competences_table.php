@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('competences', function (Blueprint $table) {
             $table->id();
-            $table->string('Référence')->unique();
+            $table->string('Reference')->unique();
             $table->string('Code');
             $table->string('Name');
             $table->string('Description');

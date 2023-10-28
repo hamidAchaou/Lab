@@ -21,6 +21,6 @@ Route::get('/create', [CompetencesController::class, 'create'])->name("competenc
 Route::post('/store', [CompetencesController::class, 'store'])->name("competences.store"); // add competences in databases
 Route::get('/{id}/edit', [CompetencesController::class, 'edit'])->name("competences.edit"); // show edit competences
 Route::put('/update/{id}', [CompetencesController::class, 'update'])->name("competences.update");
-Route::delete('/destroy/{id}', [CompetencesController::class, 'destroy'])->name("competences.destroy");
+Route::delete('/destroy', [CompetencesController::class, 'destroy'])->name("competences.destroy");
 
-
+Route::post('/search-competences', [CompetencesController::class, 'searchCompetences'])->name('search.competences');
